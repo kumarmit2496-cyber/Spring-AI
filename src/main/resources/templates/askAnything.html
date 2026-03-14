@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>AI Assistant</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+	<style>
+		body {
+			background: #eef2f7;
+			font-family: Arial;
+		}
+
+		/* SIDEBAR */
+
+		.sidebar {
+			height: 100vh;
+			width: 230px;
+			position: fixed;
+			background: #1f2a40;
+			padding-top: 20px;
+		}
+
+		.sidebar h4 {
+			color: white;
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		.sidebar a {
+			display: block;
+			padding: 15px;
+			text-decoration: none;
+			font-size: 16px;
+			color: white;
+			margin: 5px 10px;
+			border-radius: 8px;
+		}
+
+		.sidebar a:hover {
+			opacity: 0.9;
+		}
+
+		/* MENU COLORS */
+
+		.menu-ai {
+			background: #4e73df;
+		}
+
+		.menu-travel {
+			background: #1cc88a;
+		}
+
+		.menu-image {
+			background: #f6c23e;
+		}
+
+		.menu-email {
+			background: #e74a3b;
+		}
+
+		/* CONTENT */
+
+		.content {
+			margin-left: 240px;
+			padding: 40px;
+		}
+
+		/* CHAT CONTAINER */
+
+		.chat-container {
+			max-width: 900px;
+			margin: auto;
+			background: white;
+			border-radius: 12px;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+			display: flex;
+			flex-direction: column;
+			height: 500px;
+		}
+
+		/* HEADER */
+
+		.chat-header {
+			background: #f1f1f1;
+			padding: 15px;
+			font-weight: 600;
+			text-align: center;
+			border-bottom: 1px solid #ddd;
+		}
+
+		/* BODY */
+
+		.chat-body {
+			flex: 1;
+			overflow-y: auto;
+			padding: 20px;
+			background: #fafafa;
+		}
+
+		/* MESSAGE */
+
+		.chat-message {
+			margin-bottom: 15px;
+			padding: 12px;
+			border-radius: 8px;
+		}
+
+		.user-message {
+			background: #d1e7ff;
+		}
+
+		.ai-message {
+			background: #e2ffe2;
+		}
+
+		/* FOOTER */
+
+		.chat-footer {
+			padding: 15px;
+			border-top: 1px solid #ddd;
+			background: white;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<!-- SIDEBAR -->
+
+	<div class="sidebar">
+
+		<h4>🤖 AI Tools</h4>
+
+		<a href="/" class="menu-ai">
+			<i class="bi bi-chat-dots"></i> Ask AI
+		</a>
+
+		<a href="/showTravelGuide" class="menu-travel">
+			<i class="bi bi-airplane"></i> Travel Guide
+		</a>
+
+		<a href="/imageGenerator" class="menu-image">
+			<i class="bi bi-image"></i> Image Generator
+		</a>
+
+		<a href="/emailWriter" class="menu-email">
+			<i class="bi bi-envelope"></i> Email Writer
+		</a>
+
+	</div>
+
+	<!-- MAIN CONTENT -->
+
+	<div class="content">
+
+		<div class="chat-container">
+
+			<div class="chat-header">
+				<i class="bi bi-robot"></i> Ask AI Assistant
+			</div>
+
+			<div class="chat-body">
+
+				<div class="chat-message user-message" th:if="${question}">
+					<strong>You:</strong><br>
+					<span th:text="${question}"></span>
+				</div>
+
+				<div class="chat-message ai-message" th:if="${answer}">
+					<strong>AI:</strong><br>
+					<span th:text="${answer}"></span>
+				</div>
+
+			</div>
+
+			<div class="chat-footer">
+
+				<form th:action="@{/askAnything}" method="post" class="d-flex gap-2">
+
+					<input type="text" name="question" class="form-control" placeholder="Type your question..."
+						required>
+
+					<button class="btn btn-primary px-4">
+						Send
+					</button>
+
+				</form>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script>
+
+		/* Auto scroll chat */
+
+		window.onload = function () {
+			const chatBody = document.querySelector(".chat-body");
+			chatBody.scrollTop = chatBody.scrollHeight;
+		}
+
+	</script>
+
+</body>
+
+</html>
