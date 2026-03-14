@@ -1,0 +1,14 @@
+spring:
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+
+      chat:
+        options:
+          model: gpt-4o
+          max-tokens: 100
+
+      image:
+        options:
+          model: dall-e-3
+          size: 1024x1024
