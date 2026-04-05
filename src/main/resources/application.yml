@@ -1,14 +1,22 @@
 spring:
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY}
+      api-key: 
 
       chat:
         options:
           model: gpt-4o
-          max-tokens: 100
+          max-tokens: 500
 
       image:
         options:
           model: dall-e-3
           size: 1024x1024
+
+      security:
+           user:
+            name: amitit
+           password: Amit123
+
+      server:
+          port: ${PORT:8080}
