@@ -93,19 +93,29 @@ body {
 
 	<div class="sidebar">
 
-		<h4>🤖 AI Tools</h4>
+    <h4>🤖 AI Tools</h4>
 
-		<a href="/" class="menu-ai"> <i class="bi bi-chat-dots"></i> Ask
-			AI
-		</a> <a href="/showTravelGuide" class="menu-travel"> <i
-			class="bi bi-airplane"></i> Travel Guide
-		</a> <a href="/imageGenerator" class="menu-image"> <i
-			class="bi bi-image"></i> Image Generator
-		</a> <a href="/emailWriter" class="menu-email"> <i
-			class="bi bi-envelope"></i> Email Writer
-		</a>
+    <a th:href="@{/}" class="menu-ai">
+        <i class="bi bi-chat-dots"></i> Ask AI
+    </a>
 
-	</div>
+    <a th:href="@{/showTravelGuide}" class="menu-travel">
+        <i class="bi bi-airplane"></i> Travel Guide
+    </a>
+
+    <a th:href="@{/imageGenerator}" class="menu-image">
+        <i class="bi bi-image"></i> Image Generator
+    </a>
+
+    <a th:href="@{/emailWriter}" class="menu-email">
+        <i class="bi bi-envelope"></i> Email Writer
+    </a>
+
+    <a th:href="@{/resumeBuilder}" class="menu-resume">
+        <i class="bi bi-file-earmark-person"></i> Resume Builder
+    </a>
+
+</div>
 
 	<!-- MAIN CONTENT -->
 
