@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Enquiries</title>
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+        }
+
+        .navbar-custom {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-custom {
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .table thead {
+            background-color: #f8f9fa;
+        }
+
+        .badge-open { background-color: #ffc107; }
+        .badge-enrolled { background-color: #28a745; }
+        .badge-lost { background-color: #dc3545; }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Counsellor Portal</a>
+        <div>
+            <a class="btn btn-outline-light me-2" href="dashboard">Dashboard</a>
+            <a class="btn btn-outline-light me-2" href="enquiry">Add Enquiry</a>
+            <a class="btn btn-light me-2" href="view-enquiries">View Enquiries</a>
+            <a class="btn btn-danger" href="logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<!-- TABLE SECTION -->
+<div class="container mt-5">
+    <div class="card card-custom p-4 bg-white">
+
+        <h3 class="text-center mb-4 text-primary fw-bold">
+            Enquiries List
+        </h3>
+
+        <!-- FILTER SECTION -->
+        <form th:action="@{/filter-eqnuiries}"
+              th:object="${filterRequestDto}"
+              method="post"
+              class="row g-3 mb-4">
+
+            <div class="col-md-3">
+                <select class="form-select" th:field="*{classMode}">
+                    <option value="">Class Mode</option>
+                    <option value="Online">Online</option>
+                    <option value="Classroom">Classroom</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <select class="form-select" th:field="*{courseId}">
+                    <option value="">Course</option>
+                    <option th:each="course : ${courses}"
+                            th:value="${course.courseId}"
+                            th:text="${course.courseName}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <select class="form-select" th:field="*{enqStatus}">
+                    <option value="">Status</option>
+                    <option value="OPEN">Open</option>
+                    <option value="ENROLLED">Enrolled</option>
+                    <option value="LOST">Lost</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 d-flex">
+                <button type="submit" class="btn btn-primary w-100 me-2">
+                    Filter
+                </button>
+
+                <a href="view-enquiries" class="btn btn-secondary w-100">
+                    Reset
+                </a>
+            </div>
+
+        </form>
+
+        <!-- TABLE -->
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Student Name</th>
+                    <th>Phone</th>
+                    <th>Course</th>
+                    <th>Class Mode</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="enq, loopCounter : ${enqs}">
+                    <td th:text="${loopCounter.index + 1}"></td>
+                    <td th:text="${enq.stuName}"></td>
+                    <td th:text="${enq.stuPhno}"></td>
+                    <td th:text="${enq.course.courseName}"></td>
+                    <td th:text="${enq.classMode}"></td>
+
+                    <td>
+
+                        <span th:if="${enq.enqStatus == 'OPEN'}"
+                              class="badge badge-open text-dark px-3 py-2">
+                            Open
+                        </span>
+
+                        <span th:if="${enq.enqStatus == 'ENROLLED'}"
+                              class="badge badge-enrolled text-white px-3 py-2">
+                            Enrolled
+                        </span>
+
+                        <span th:if="${enq.enqStatus == 'LOST'}"
+                              class="badge badge-lost text-white px-3 py-2">
+                            Lost
+                        </span>
+
+                    </td>
+
+                    <!-- EDIT BUTTON -->
+                    <td>
+                        <a th:href="@{'/editenq?enqId=' + ${enq.enqId}}"
+                           class="btn btn-sm btn-primary">
+                            Edit
+                        </a>
+                    </td>
+
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(enqs)}">
+                    <td colspan="7" class="text-center text-danger fw-bold">
+                        No Records Found
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
